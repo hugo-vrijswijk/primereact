@@ -8,6 +8,7 @@ import '../styles/layout/layout.scss';
 import '../styles/primereact.css';
 // prettier-ignore
 import PrimeReact from '../components/lib/api/Api';
+import { Tailwind } from '../components/lib/passthrough/tailwind';
 import { PrimeReactContext, PrimeReactProvider } from '../components/lib/api/PrimeReactContext';
 import AnnouncementData from '../data/news.json';
 import '../styles/demo/demo.scss';
@@ -97,7 +98,7 @@ function Main({ component: Component }) {
 
 export default function MyApp({ Component }) {
     return (
-        <PrimeReactProvider>
+        <PrimeReactProvider value={{ unstyled: true, pt: Tailwind }}>
             <Main component={Component} />
         </PrimeReactProvider>
     );
