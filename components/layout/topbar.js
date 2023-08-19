@@ -97,15 +97,15 @@ export default function Topbar(props) {
         };
     }, []);
 
-    const onToggleButtonClick = (event) =>  {
+    const onToggleButtonClick = (event) => {
         const root = document.getElementsByTagName('html')[0];
-        
+
         if (DomHandler.hasClass(root, 'dark')) {
             DomHandler.removeClass(root, 'dark');
         } else {
             DomHandler.addClass(root, 'dark');
         }
-    }
+    };
 
     return (
         <div ref={containerElement} className="layout-topbar">
@@ -139,11 +139,11 @@ export default function Topbar(props) {
                         </button>
                     </li> */}
 
-<li>
-                    <button type="button" className="items-center cursor-pointer inline-flex overflow-hidden relative select-none text-center align-bottom h-full transition duration-200 ease-in-out" onClick={onToggleButtonClick}>
-                        <i className="pi pi-moon"></i>
-                    </button>
-                </li>
+                    <li>
+                        <button type="button" className="items-center cursor-pointer inline-flex overflow-hidden relative select-none text-center align-bottom h-full transition duration-200 ease-in-out" onClick={onToggleButtonClick}>
+                            <i className="pi pi-moon"></i>
+                        </button>
+                    </li>
 
                     <li className="relative">
                         <StyleClass nodeRef={versionsRef} selector="@next" enterClassName="hidden" enterActiveClassName="scalein" leaveToClassName="hidden" leaveActiveClassName="fadeout" hideOnOutsideClick>

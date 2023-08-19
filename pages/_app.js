@@ -11,7 +11,7 @@ import { Tailwind } from '../components/lib/passthrough/tailwind';
 import { PrimeReactContext, PrimeReactProvider } from '../components/lib/api/PrimeReactContext';
 import AnnouncementData from '../data/news.json';
 import '../styles/demo/demo.scss';
-import '../styles/style.css'
+import '../styles/style.css';
 
 function Main({ component: Component }) {
     const [dark, setDark] = useState(false);
