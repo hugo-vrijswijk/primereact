@@ -2,6 +2,7 @@ import { DocSearch } from '@docsearch/react';
 import { useEffect, useRef } from 'react';
 import pkg from '../../package.json';
 import { StyleClass } from '../lib/styleclass/StyleClass';
+import { DomHandler } from '../lib/utils/Utils';
 
 export default function Topbar(props) {
     const versionsRef = useRef(null);
@@ -96,6 +97,16 @@ export default function Topbar(props) {
         };
     }, []);
 
+    const onToggleButtonClick = (event) =>  {
+        const root = document.getElementsByTagName('html')[0];
+        
+        if (DomHandler.hasClass(root, 'dark')) {
+            DomHandler.removeClass(root, 'dark');
+        } else {
+            DomHandler.addClass(root, 'dark');
+        }
+    }
+
     return (
         <div ref={containerElement} className="layout-topbar">
             <div className="layout-topbar-inner">
@@ -106,7 +117,7 @@ export default function Topbar(props) {
 
                 <ul className="flex list-none m-0 p-0 gap-2 align-items-center">
                     <li></li>
-                    <li>
+                    {/* <li>
                         <a
                             href="https://github.com/primefaces/primereact"
                             className="flex p-link border-1 border-solid w-2rem h-2rem surface-border border-round surface-card align-items-center justify-content-center transition-all transition-duration-300 hover:border-primary"
@@ -126,7 +137,13 @@ export default function Topbar(props) {
                         <button type="button" className="p-button flex border-1 w-2rem h-2rem p-0 align-items-center justify-content-center transition-all transition-duration-300 min-w-0" onClick={onConfigButtonClick}>
                             <i className="pi pi-cog"></i>
                         </button>
-                    </li>
+                    </li> */}
+
+<li>
+                    <button type="button" className="items-center cursor-pointer inline-flex overflow-hidden relative select-none text-center align-bottom h-full transition duration-200 ease-in-out" onClick={onToggleButtonClick}>
+                        <i className="pi pi-moon"></i>
+                    </button>
+                </li>
 
                     <li className="relative">
                         <StyleClass nodeRef={versionsRef} selector="@next" enterClassName="hidden" enterActiveClassName="scalein" leaveToClassName="hidden" leaveActiveClassName="fadeout" hideOnOutsideClick>
