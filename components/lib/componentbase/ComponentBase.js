@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import PrimeReact from '../api/Api';
 import { useStyle } from '../hooks/Hooks';
 import { ObjectUtils } from '../utils/Utils';
+import { Tailwind } from '../passthrough/tailwind';
 
 const buttonStyles = `
 .p-button {
@@ -575,10 +576,12 @@ export const ComponentBase = {
 };
 
 export const useHandleStyle = (styles, isUnstyled = false, { name, styled = false }) => {
+    const { load: loadGlobalStyle } = useStyle(Tailwind.global.css, { name: 'global', manual: true });
     const { load: loadCommonStyle } = useStyle(baseStyles, { name: 'common', manual: true });
     const { load } = useStyle(styles, { name: name, manual: true });
 
     useEffect(() => {
+        loadGlobalStyle();
         loadCommonStyle();
         if (!styled) load();
 
