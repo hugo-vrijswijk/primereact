@@ -210,7 +210,7 @@ export const ColumnFilter = React.memo((props) => {
         let value = event.target.value;
         let filterField = filters[field];
 
-        if (props.display === 'menu' && filterField.constraints) {
+        if (props.display === 'menu' && ObjectUtils.isNotEmpty(filterField.constraints)) {
             filterField.constraints[index].value = value;
         } else {
             filterField.value = value;
@@ -300,8 +300,14 @@ export const ColumnFilter = React.memo((props) => {
     const onMenuMatchModeChange = (value, index) => {
         const filterMatchModeChangeCallback = getColumnProp('onFilterMatchModeChange');
         let filters = { ...props.filters };
+        let filterField = filters[field];
 
-        filters[field].constraints[index].matchMode = value;
+        if (props.display === 'menu' && ObjectUtils.isNotEmpty(filterField.constraints)) {
+            filterField.constraints[index].matchMode = value;
+        } else {
+            filterField.matchMode = value;
+        }
+
         props.onFilterChange(filters);
         filterMatchModeChangeCallback && filterMatchModeChangeCallback({ field, matchMode: value, index: index });
 
