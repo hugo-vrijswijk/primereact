@@ -6,9 +6,10 @@ import '../styles/layout/layout.scss';
 // prettier-ignore
 import '../styles/primereact.css';
 // prettier-ignore
+import { GTagManager } from '../components/analytics/analytics';
 import PrimeReact from '../components/lib/api/Api';
-import { Tailwind } from '../components/lib/passthrough/tailwind';
 import { PrimeReactContext, PrimeReactProvider } from '../components/lib/api/PrimeReactContext';
+import { Tailwind } from '../components/lib/passthrough/tailwind';
 import AnnouncementData from '../data/news.json';
 import '../styles/demo/demo.scss';
 import '../styles/style.css';
@@ -97,8 +98,11 @@ function Main({ component: Component }) {
 }
 
 export default function MyApp({ Component }) {
+    const isProduction = process.env.NODE_ENV === 'production';
+
     return (
         <PrimeReactProvider value={{ unstyled: true, pt: Tailwind }}>
+            {isProduction && <GTagManager />}
             <Main component={Component} />
         </PrimeReactProvider>
     );

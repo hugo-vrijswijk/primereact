@@ -22,14 +22,15 @@ export const Calendar = React.memo(
         const [focusedState, setFocusedState] = React.useState(false);
         const [overlayVisibleState, setOverlayVisibleState] = React.useState(false);
         const [viewDateState, setViewDateState] = React.useState(null);
-        const { ptm, cx, isUnstyled } = CalendarBase.setMetaData({
+        const metaData = {
             props,
             state: {
                 focused: focusedState,
                 overlayVisible: overlayVisibleState,
                 viewDate: viewDateState
             }
-        });
+        };
+        const { ptm, cx, isUnstyled } = CalendarBase.setMetaData(metaData);
 
         useHandleStyle(CalendarBase.css.styles, isUnstyled, { name: 'calendar' });
         const elementRef = React.useRef(null);
@@ -1924,7 +1925,11 @@ export const Calendar = React.memo(
             if (isComparable()) {
                 let value = isRangeSelection() ? props.value[0] : props.value;
 
-                return !isMultipleSelection() ? value.getMonth() === month && value.getFullYear() === currentYear : false;
+                if (isMultipleSelection()) {
+                    return value.some((currentValue) => currentValue.getMonth() === month && currentValue.getFullYear() === currentYear);
+                } else {
+                    return value.getMonth() === month && value.getFullYear() === currentYear;
+                }
             }
 
             return false;
@@ -1934,7 +1939,11 @@ export const Calendar = React.memo(
             if (isComparable()) {
                 let value = isRangeSelection() ? props.value[0] : props.value;
 
-                return !isMultipleSelection() && isComparable() ? value.getFullYear() === year : false;
+                if (isMultipleSelection()) {
+                    return value.some((currentValue) => currentValue.getFullYear() === year);
+                } else {
+                    return value.getFullYear() === year;
+                }
             }
 
             return false;
@@ -3531,6 +3540,7 @@ export const Calendar = React.memo(
                         tooltip={props.tooltip}
                         tooltipOptions={props.tooltipOptions}
                         pt={ptm('input')}
+                        __parentMetadata={{ parent: metaData }}
                     />
                 );
             }
@@ -3540,7 +3550,7 @@ export const Calendar = React.memo(
 
         const createButton = () => {
             if (props.showIcon) {
-                return <Button type="button" icon={props.icon || <CalendarIcon />} onClick={onButtonClick} tabIndex="-1" disabled={props.disabled} className={cx('dropdownButton')} pt={ptm('dropdownButton')} />;
+                return <Button type="button" icon={props.icon || <CalendarIcon />} onClick={onButtonClick} tabIndex="-1" disabled={props.disabled} className={cx('dropdownButton')} pt={ptm('dropdownButton')} __parentMetadata={{ parent: metaData }} />;
             }
 
             return null;
