@@ -341,7 +341,7 @@ export const Dialog = React.forwardRef((inProps, ref) => {
         const isMaximized = props.maximizable && maximized;
 
         if (props.modal) {
-            const hasBlockScroll = document.primeDialogParams && document.primeDialogParams.some((param) => param.hasBlockScroll);
+            const hasBlockScroll = props.blockScroll || (document.primeDialogParams && document.primeDialogParams.some((param) => param.hasBlockScroll));
 
             if (hasBlockScroll || isMaximized) {
                 DomHandler.removeClass(document.body, 'p-overflow-hidden');
@@ -659,9 +659,24 @@ export const Dialog = React.forwardRef((inProps, ref) => {
             ptm('root')
         );
 
+        const transitionProps = mergeProps(
+            {
+                classNames: cx('transition'),
+                timeout: transitionTimeout,
+                in: visibleState,
+                options: props.transitionOptions,
+                unmountOnExit: true,
+                onEnter: onEnter,
+                onEntered: onEntered,
+                onExiting: onExiting,
+                onExited: onExited
+            },
+            ptm('transition')
+        );
+
         return (
             <div {...maskProps}>
-                <CSSTransition nodeRef={dialogRef} classNames="p-dialog" timeout={transitionTimeout} in={visibleState} options={props.transitionOptions} unmountOnExit onEnter={onEnter} onEntered={onEntered} onExiting={onExiting} onExited={onExited}>
+                <CSSTransition nodeRef={dialogRef} {...transitionProps}>
                     <div {...rootProps}>
                         {header}
                         {content}
