@@ -269,7 +269,7 @@ svg.p-icon g {
 }
 `;
 const baseStyles = `
-@layer primereact.core {
+@layer primereact {
     .p-component, .p-component * {
         box-sizing: border-box;
     }
@@ -646,8 +646,8 @@ export const useHandleStyle = (styles, isUnstyled = false, config) => {
         }
     };
 
+    hook('useMountEffect');
     useMountEffect(() => {
-        hook('useMountEffect');
         loadGlobalStyle();
         loadCommonStyle();
         if (!styled) load();
